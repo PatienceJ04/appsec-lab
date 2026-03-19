@@ -19,7 +19,7 @@ same loop:
 
 ```bash
 # 1. Fork this repo on GitHub, then clone your fork
-git clone https://github.com/YOUR-USERNAME/appsec-lab
+git clone https://github.com/viyer-research/appsec-lab
 cd appsec-lab
 
 # 2. Create and activate a virtual environment
