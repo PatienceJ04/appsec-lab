@@ -7,7 +7,7 @@ in the challenge cards, then identify and fix the vulnerabilities.
 """
 
 import sqlite3
-from flask import Flask, g
+from flask import Flask, g, request
 
 app = Flask(__name__)
 app.config["DATABASE"] = "users.db"
@@ -58,6 +58,21 @@ def close_db(error):
 # Paste Copilot's code below this comment, then find and fix the vulnerability.
 
 # YOUR CODE HERE
+# Write a Flask POST /login route that checks a username and password against a SQLite database called users.db
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+    db = get_db()
+    # Vulnerable to SQL Injection
+    query =  "SELECT * FROM users WHERE username = ? AND password = ?"
+    user = db.execute(query, (username, password)).fetchone()
+    if user:
+        return "Login successful!"
+    else:
+        return "Invalid credentials", 401
+
+
 
 
 # ── Lab 02: Cross-Site Scripting (XSS) ──────────────────────────────────────
@@ -111,4 +126,4 @@ def close_db(error):
 if __name__ == "__main__":
     with app.app_context():
         init_db()
-    app.run(debug=True)
+    app.run(debug=False)
